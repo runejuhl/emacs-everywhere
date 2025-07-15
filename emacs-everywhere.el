@@ -444,10 +444,12 @@ Never paste content when ABORT is non-nil."
                    (not abort))
           ;; Add small delay before paste
           (sleep-for emacs-everywhere-clipboard-sleep-delay)
-          (apply #'call-process (car emacs-everywhere-paste-command)
-                 (if (cdr emacs-everywhere-paste-command) nil
-                   (make-temp-file nil nil nil "key shift+insert")) nil nil
-                   (cdr emacs-everywhere-paste-command)))))
+          (apply #'call-process "wtype"
+                 ;; (car emacs-everywhere-paste-command)
+                 buffer-file-name nil nil
+                 '("-")
+                 ;; (cdr emacs-everywhere-paste-command)
+                 ))))
     ;; Clean up after ourselves in case the buffer survives `server-buffer-done'
     (set-buffer-modified-p nil)
     (let ((kill-buffer-query-functions nil))
